@@ -25,5 +25,7 @@ bindings:
     type: time.Time
   URI:
     type: string
-#  PullRequest:
-#    type: github.com/StevenACoffman/pkg/types.Node
+#  SearchResultItemEdge:
+#    type: github.com/StevenACoffman/teamboard/pkg/types.Edge
+#  SearchResultItemEdge:
+#    type: encoding/json.RawMessage

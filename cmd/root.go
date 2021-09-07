@@ -1,18 +1,18 @@
 package cmd
 
 import (
-  "context"
-  "fmt"
-  "github.com/Khan/genqlient/graphql"
+    "context"
+    "fmt"
+    "github.com/Khan/genqlient/graphql"
     "github.com/StevenACoffman/teamboard/pkg/middleware"
     "github.com/spf13/cobra"
-  "net/http"
-  "os"
+    "net/http"
+    "os"
 
-  homedir "github.com/mitchellh/go-homedir"
-  "github.com/spf13/viper"
+    homedir "github.com/mitchellh/go-homedir"
+    "github.com/spf13/viper"
 
-  "github.com/StevenACoffman/teamboard/pkg/generated/genqlient"
+    "github.com/StevenACoffman/teamboard/pkg/generated/genqlient"
 )
 
 var cfgFile string
@@ -67,17 +67,46 @@ var rootCmd = &cobra.Command{
           return
         }
         for _, edge := range resp.Mementioned.Edges {
- // edge is MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdge
- // not sure how to get to MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequest
 
-            fmt.Println(edge.Node.GetTypename())
+            //s, ok := (edge).(*types.EdgeNodePullRequest)
+
+            s, ok := edge.Node.(*genqlient.MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequest)
+            if ok {
+                fmt.Println(s.Url)
+            }
         }
+        for _, edge := range resp.Merequested.Edges {
 
-        fmt.Printf("%+v\n", resp.Mementioned.Edges)
-        fmt.Printf("%+v\n",resp.Merequested.Edges)
-        fmt.Printf("%+v\n",resp.Teammates.Edges)
-        fmt.Printf("%+v\n",resp.Teammentions.Edges)
-        fmt.Printf("%+v\n",resp.Teamrequested.Edges)
+            //s, ok := (&edge).(types.EdgeNodePullRequest)
+            s, ok := edge.Node.(*genqlient.MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequest)
+            if ok {
+                fmt.Println(s.Url)
+            }
+        }
+        for _, edge := range resp.Teammates.Edges {
+
+            //s, ok := (&edge).(types.EdgeNodePullRequest)
+            s, ok := edge.Node.(*genqlient.MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequest)
+            if ok {
+                fmt.Println(s.Url)
+            }
+        }
+        for _, edge := range resp.Teammentions.Edges {
+
+            //s, ok := (&edge).(types.EdgeNodePullRequest)
+            s, ok := edge.Node.(*genqlient.MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequest)
+            if ok {
+                fmt.Println(s.Url)
+            }
+        }
+        for _, edge := range resp.Teamrequested.Edges {
+
+            //s, ok := (&edge).(types.EdgeNodePullRequest)
+            s, ok := edge.Node.(*genqlient.MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequest)
+            if ok {
+                fmt.Println(s.Url)
+            }
+        }
     },
 }
 

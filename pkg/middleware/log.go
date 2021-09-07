@@ -6,6 +6,7 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/StevenACoffman/teamboard/pkg/middleware/http2curl"
@@ -31,8 +32,16 @@ func (rt *LoggingRoundTripper) RoundTrip(
 ) (resp *http.Response, err error) {
 	defer func(begin time.Time) {
 		var msg string
-
-		if resp != nil  { // && (resp.StatusCode < 200 || resp.StatusCode >= 300)
+		body, getResponseBodyErr := GetResponseBody(resp)
+		if getResponseBodyErr != nil {
+			fmt.Println("unable to get response Body",getResponseBodyErr)
+		}
+		gotHTTPErr := resp != nil && (resp.StatusCode < 200 || resp.StatusCode >= 300)
+		gotGraphQLErr := false
+		if body != "" && strings.Contains(body, "\"errors\":[{\"m") {
+			gotGraphQLErr = true
+		}
+		if gotHTTPErr || gotGraphQLErr{ // only log when there was a problem
 
 			msg = fmt.Sprintf(
 				"method=%s host=%s path=%s status_code=%d took=%s\n",
@@ -49,10 +58,7 @@ func (rt *LoggingRoundTripper) RoundTrip(
 			}
 			command, _ := http2curl.GetCurlCommand(req)
 			fmt.Println(command)
-			body, getResponseBodyErr := GetResponseBody(resp)
-			if getResponseBodyErr != nil {
-				fmt.Println("unable to get response Body",getResponseBodyErr)
-			}
+
 			fmt.Println(body)
 		}
 	}(time.Now())
