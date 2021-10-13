@@ -55,6 +55,7 @@ func (rt *HeaderRoundTripper) BearerAuth(token string) {
 
 	rt.Header.Set("Authorization", "bearer "+token)
 }
+
 func (rt *HeaderRoundTripper) SetHeader(key, value string) {
 	if rt.Header == nil {
 		rt.Header = make(http.Header)
@@ -82,7 +83,7 @@ func NewBasicAuthHTTPClient(user, token string) *http.Client {
 // NewBearerAuthHTTPClient configures an HTTP Client
 // that adds bearer token auth header and json
 // as well as a generous 60-second timeout.
-func NewBearerAuthHTTPClient( token string) *http.Client {
+func NewBearerAuthHTTPClient(token string) *http.Client {
 	header := make(http.Header)
 	header.Set("Content-Type", "application/json; charset=utf-8")
 	header.Set("Accept", "application/json; charset=utf-8")

@@ -25,7 +25,7 @@ bindings:
     type: time.Time
   URI:
     type: string
-#  SearchResultItemEdge:
-#    type: github.com/StevenACoffman/teamboard/pkg/types.Edge
+  SearchResultItemEdge:
+    type: github.com/StevenACoffman/teamboard/pkg/types.Edge
 #  SearchResultItemEdge:
 #    type: encoding/json.RawMessage

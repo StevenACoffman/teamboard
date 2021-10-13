@@ -1,3 +1,39 @@
+query MyLogin {
+  viewer {
+    login
+  }
+}
+
+query MyOrgs {
+  viewer {
+    organizations(first: 100) {
+      nodes {
+        login
+      }
+    }
+  }
+}
+
+query MyTeams($Org:String!, $Login:String!) {
+  organization(login: $Org) {
+    teams(first: 100, userLogins: [$Login]) {
+      totalCount
+      edges {
+        node {
+          name
+          description
+        }
+      }
+    }
+  }
+}
+
+# {
+# "Org":"Khan",
+#"Login":"StevenACoffman"
+# }
+
+
 query MyBatch($MeRequestedQuery: String!, $MeMentionedQuery: String!, $TeamAuthoredQuery: String!, $TeamMentionedQuery: String!, $TeamRequestedQuery: String!) {
   merequested: search(query: $MeRequestedQuery, type: ISSUE, first: 100) {
     issueCount
@@ -8,6 +44,9 @@ query MyBatch($MeRequestedQuery: String!, $MeMentionedQuery: String!, $TeamAutho
           title
           repository {
             nameWithOwner
+          }
+          author {
+            login
           }
           createdAt
           mergedAt
@@ -29,6 +68,9 @@ query MyBatch($MeRequestedQuery: String!, $MeMentionedQuery: String!, $TeamAutho
           repository {
             nameWithOwner
           }
+          author {
+            login
+          }
           createdAt
           mergedAt
           url
@@ -48,6 +90,9 @@ query MyBatch($MeRequestedQuery: String!, $MeMentionedQuery: String!, $TeamAutho
           title
           repository {
             nameWithOwner
+          }
+          author {
+            login
           }
           createdAt
           mergedAt
@@ -69,6 +114,9 @@ query MyBatch($MeRequestedQuery: String!, $MeMentionedQuery: String!, $TeamAutho
           repository {
             nameWithOwner
           }
+          author {
+            login
+          }
           createdAt
           mergedAt
           url
@@ -89,6 +137,9 @@ query MyBatch($MeRequestedQuery: String!, $MeMentionedQuery: String!, $TeamAutho
           repository {
             nameWithOwner
           }
+          author {
+            login
+          }
           createdAt
           mergedAt
           url
@@ -107,4 +158,30 @@ query MyBatch($MeRequestedQuery: String!, $MeMentionedQuery: String!, $TeamAutho
 # "TeamAuthoredQuery": "is:open is:pr is:private archived:false author:StevenACoffman author:drewkiimon author:kphilipkhan author:jeffkhan",
 # "TeamMentionedQuery": "is:open is:pr is:private archived:false team:Khan/districts",
 # "TeamRequestedQuery": "is:open is:pr is:private archived:false team-review-requested:Khan/districts"
+# }
+
+query TeamMembers($Org:String!, $Team:String!) {
+  organization(login: $Org) {
+    teams(first: 100, query: $Team) {
+      totalCount
+      edges {
+        node {
+          members {
+            edges {
+              node {
+                name
+                login
+              }
+            }
+          }
+          name
+          description
+        }
+      }
+    }
+  }
+}
+# {
+# "org":"khan",
+#"team":"districts"
 # }

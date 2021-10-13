@@ -16,28 +16,30 @@ type Repository struct {
 
 type Item interface {
 	implementsItem()
-	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
+	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible
+	// values).
 	GetTypename() string
 }
 
-func (v *EdgeNodePullRequest) implementsItem() {
+func (v *PullRequest) implementsItem() {
 }
 
 // GetTypename is a part of, and documented with, the interface Item.
-func (v *EdgeNodePullRequest) GetTypename() string {
+func (v *PullRequest) GetTypename() string {
 	return v.Typename
 }
 
-// EdgeNodePullRequest includes the requested fields of the GraphQL type PullRequest.
+// PullRequest includes the requested fields of the GraphQL type PullRequest.
 // The GraphQL type's documentation follows.
 //
 // A repository pull request.
-type EdgeNodePullRequest struct {
+type PullRequest struct {
 	Typename string `json:"__typename"`
 	// Identifies the pull request number.
 	Number int `json:"number"`
 	// Identifies the pull request title.
-	Title string `json:"title"`
+	Title  string `json:"title"`
+	Author Author `json:"author"`
 	// The repository associated with this node.
 	Repository Repository `json:"repository"`
 	// Identifies the date and time when the object was created.
@@ -52,6 +54,28 @@ type EdgeNodePullRequest struct {
 	Additions int `json:"additions"`
 	// The number of deletions in this pull request.
 	Deletions int `json:"deletions"`
+	// Identifies if the pull request is a draft.
+	IsDraft bool `json:isDraft`
+}
+
+// Author includes the requested fields of the GraphQL type User.
+// The GraphQL type's documentation follows.
+//
+// A user is an individual's account on GitHub that owns repositories and can make new content.
+type Author struct {
+	Typename string `json:"__typename"`
+	// The username of the actor.
+	Login string `json:"login"`
+}
+
+// GetTypename is a part of Author
+func (v *Author) GetTypename() string {
+	return v.Typename
+}
+
+// GetLogin is a part of Author
+func (v *Author) GetLogin() string {
+	return v.Login
 }
 
 func __unmarshalEdgeNodeSearchResultItem(v *Item, m json.RawMessage) error {
@@ -70,7 +94,7 @@ func __unmarshalEdgeNodeSearchResultItem(v *Item, m json.RawMessage) error {
 	switch tn.TypeName {
 
 	case "PullRequest":
-		*v = new(EdgeNodePullRequest)
+		*v = new(PullRequest)
 		return json.Unmarshal(m, *v)
 
 	case "":

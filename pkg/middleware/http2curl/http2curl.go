@@ -35,7 +35,7 @@ func GetCurlCommand(req *http.Request) (*CurlCommand, error) {
 
 	if req.Body != nil {
 		var buff bytes.Buffer
-		bodyReader, err  := req.GetBody()
+		bodyReader, err := req.GetBody()
 		if err != nil {
 			return nil, fmt.Errorf("getCurlCommand: GetBody error: %w", err)
 		}
@@ -74,7 +74,6 @@ var redactedHeaders = []string{
 	"Cookie",
 	"X-Ka-Fkey",
 }
-
 
 func appendHeader(req *http.Request, k string) string {
 	if insensitiveContains(redactedHeaders, k) {

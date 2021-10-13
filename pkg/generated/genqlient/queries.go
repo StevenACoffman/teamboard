@@ -4,11 +4,9 @@ package genqlient
 
 import (
 	"context"
-	"encoding/json"
-	"fmt"
-	"time"
 
 	"github.com/Khan/genqlient/graphql"
+	"github.com/StevenACoffman/teamboard/pkg/types"
 )
 
 // MyBatchMementionedSearchResultItemConnection includes the requested fields of the GraphQL type SearchResultItemConnection.
@@ -19,247 +17,7 @@ type MyBatchMementionedSearchResultItemConnection struct {
 	// The number of issues that matched the search query.
 	IssueCount int `json:"issueCount"`
 	// A list of edges.
-	Edges []MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdge `json:"edges"`
-}
-
-// MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdge includes the requested fields of the GraphQL type SearchResultItemEdge.
-// The GraphQL type's documentation follows.
-//
-// An edge in a connection.
-type MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdge struct {
-	// The item at the end of the edge.
-	Node MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem `json:"-"`
-}
-
-func (v *MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdge) UnmarshalJSON(b []byte) error {
-
-	type MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeWrapper MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdge
-
-	var firstPass struct {
-		*MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeWrapper
-		Node json.RawMessage `json:"node"`
-	}
-	firstPass.MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeWrapper = (*MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeWrapper)(v)
-
-	err := json.Unmarshal(b, &firstPass)
-	if err != nil {
-		return err
-	}
-
-	{
-		target := &v.Node
-		raw := firstPass.Node
-		err = __unmarshalMyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem(
-			target, raw)
-		if err != nil {
-			return fmt.Errorf(
-				"Unable to unmarshal MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdge.Node: %w", err)
-		}
-	}
-	return nil
-}
-
-// MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeApp includes the requested fields of the GraphQL type App.
-// The GraphQL type's documentation follows.
-//
-// A GitHub App.
-type MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeApp struct {
-	Typename string `json:"__typename"`
-}
-
-// MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeIssue includes the requested fields of the GraphQL type Issue.
-// The GraphQL type's documentation follows.
-//
-// An Issue is a place to discuss ideas, enhancements, tasks, and bugs for a project.
-type MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeIssue struct {
-	Typename string `json:"__typename"`
-}
-
-// MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeMarketplaceListing includes the requested fields of the GraphQL type MarketplaceListing.
-// The GraphQL type's documentation follows.
-//
-// A listing in the GitHub integration marketplace.
-type MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeMarketplaceListing struct {
-	Typename string `json:"__typename"`
-}
-
-// MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeOrganization includes the requested fields of the GraphQL type Organization.
-// The GraphQL type's documentation follows.
-//
-// An account on GitHub, with one or more owners, that has repositories, members and teams.
-type MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeOrganization struct {
-	Typename string `json:"__typename"`
-}
-
-// MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequest includes the requested fields of the GraphQL type PullRequest.
-// The GraphQL type's documentation follows.
-//
-// A repository pull request.
-type MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequest struct {
-	Typename string `json:"__typename"`
-	// Identifies the pull request number.
-	Number int `json:"number"`
-	// Identifies the pull request title.
-	Title string `json:"title"`
-	// The repository associated with this node.
-	Repository MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequestRepository `json:"repository"`
-	// Identifies the date and time when the object was created.
-	CreatedAt time.Time `json:"createdAt"`
-	// The date and time that the pull request was merged.
-	MergedAt time.Time `json:"mergedAt"`
-	// The HTTP URL for this pull request.
-	Url string `json:"url"`
-	// The number of changed files in this pull request.
-	ChangedFiles int `json:"changedFiles"`
-	// The number of additions in this pull request.
-	Additions int `json:"additions"`
-	// The number of deletions in this pull request.
-	Deletions int `json:"deletions"`
-}
-
-// MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequestRepository includes the requested fields of the GraphQL type Repository.
-// The GraphQL type's documentation follows.
-//
-// A repository contains the content for a project.
-type MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequestRepository struct {
-	// The repository's name with owner.
-	NameWithOwner string `json:"nameWithOwner"`
-}
-
-// MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeRepository includes the requested fields of the GraphQL type Repository.
-// The GraphQL type's documentation follows.
-//
-// A repository contains the content for a project.
-type MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeRepository struct {
-	Typename string `json:"__typename"`
-}
-
-// MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem includes the requested fields of the GraphQL interface SearchResultItem.
-//
-// MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem is implemented by the following types:
-// MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeApp
-// MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeIssue
-// MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeMarketplaceListing
-// MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeOrganization
-// MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequest
-// MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeRepository
-// MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeUser
-//
-// The GraphQL type's documentation follows.
-//
-// The results of a search.
-type MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem interface {
-	implementsGraphQLInterfaceMyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem()
-	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
-	GetTypename() string
-}
-
-func (v *MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeApp) implementsGraphQLInterfaceMyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem() {
-}
-
-// GetTypename is a part of, and documented with, the interface MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem.
-func (v *MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeApp) GetTypename() string {
-	return v.Typename
-}
-
-func (v *MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeIssue) implementsGraphQLInterfaceMyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem() {
-}
-
-// GetTypename is a part of, and documented with, the interface MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem.
-func (v *MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeIssue) GetTypename() string {
-	return v.Typename
-}
-
-func (v *MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeMarketplaceListing) implementsGraphQLInterfaceMyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem() {
-}
-
-// GetTypename is a part of, and documented with, the interface MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem.
-func (v *MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeMarketplaceListing) GetTypename() string {
-	return v.Typename
-}
-
-func (v *MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeOrganization) implementsGraphQLInterfaceMyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem() {
-}
-
-// GetTypename is a part of, and documented with, the interface MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem.
-func (v *MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeOrganization) GetTypename() string {
-	return v.Typename
-}
-
-func (v *MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequest) implementsGraphQLInterfaceMyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem() {
-}
-
-// GetTypename is a part of, and documented with, the interface MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem.
-func (v *MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequest) GetTypename() string {
-	return v.Typename
-}
-
-func (v *MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeRepository) implementsGraphQLInterfaceMyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem() {
-}
-
-// GetTypename is a part of, and documented with, the interface MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem.
-func (v *MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeRepository) GetTypename() string {
-	return v.Typename
-}
-
-func (v *MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeUser) implementsGraphQLInterfaceMyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem() {
-}
-
-// GetTypename is a part of, and documented with, the interface MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem.
-func (v *MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeUser) GetTypename() string {
-	return v.Typename
-}
-
-func __unmarshalMyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem(v *MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem, m json.RawMessage) error {
-	if string(m) == "null" {
-		return nil
-	}
-
-	var tn struct {
-		TypeName string `json:"__typename"`
-	}
-	err := json.Unmarshal(m, &tn)
-	if err != nil {
-		return err
-	}
-
-	switch tn.TypeName {
-	case "App":
-		*v = new(MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeApp)
-		return json.Unmarshal(m, *v)
-	case "Issue":
-		*v = new(MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeIssue)
-		return json.Unmarshal(m, *v)
-	case "MarketplaceListing":
-		*v = new(MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeMarketplaceListing)
-		return json.Unmarshal(m, *v)
-	case "Organization":
-		*v = new(MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeOrganization)
-		return json.Unmarshal(m, *v)
-	case "PullRequest":
-		*v = new(MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequest)
-		return json.Unmarshal(m, *v)
-	case "Repository":
-		*v = new(MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeRepository)
-		return json.Unmarshal(m, *v)
-	case "User":
-		*v = new(MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeUser)
-		return json.Unmarshal(m, *v)
-	case "":
-		return fmt.Errorf(
-			"Response was missing SearchResultItem.__typename")
-	default:
-		return fmt.Errorf(
-			`Unexpected concrete type for MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem: "%v"`, tn.TypeName)
-	}
-}
-
-// MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeUser includes the requested fields of the GraphQL type User.
-// The GraphQL type's documentation follows.
-//
-// A user is an individual's account on GitHub that owns repositories and can make new content.
-type MyBatchMementionedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeUser struct {
-	Typename string `json:"__typename"`
+	Edges []types.Edge `json:"edges"`
 }
 
 // MyBatchMerequestedSearchResultItemConnection includes the requested fields of the GraphQL type SearchResultItemConnection.
@@ -270,247 +28,7 @@ type MyBatchMerequestedSearchResultItemConnection struct {
 	// The number of issues that matched the search query.
 	IssueCount int `json:"issueCount"`
 	// A list of edges.
-	Edges []MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdge `json:"edges"`
-}
-
-// MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdge includes the requested fields of the GraphQL type SearchResultItemEdge.
-// The GraphQL type's documentation follows.
-//
-// An edge in a connection.
-type MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdge struct {
-	// The item at the end of the edge.
-	Node MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem `json:"-"`
-}
-
-func (v *MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdge) UnmarshalJSON(b []byte) error {
-
-	type MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeWrapper MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdge
-
-	var firstPass struct {
-		*MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeWrapper
-		Node json.RawMessage `json:"node"`
-	}
-	firstPass.MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeWrapper = (*MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeWrapper)(v)
-
-	err := json.Unmarshal(b, &firstPass)
-	if err != nil {
-		return err
-	}
-
-	{
-		target := &v.Node
-		raw := firstPass.Node
-		err = __unmarshalMyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem(
-			target, raw)
-		if err != nil {
-			return fmt.Errorf(
-				"Unable to unmarshal MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdge.Node: %w", err)
-		}
-	}
-	return nil
-}
-
-// MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeApp includes the requested fields of the GraphQL type App.
-// The GraphQL type's documentation follows.
-//
-// A GitHub App.
-type MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeApp struct {
-	Typename string `json:"__typename"`
-}
-
-// MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeIssue includes the requested fields of the GraphQL type Issue.
-// The GraphQL type's documentation follows.
-//
-// An Issue is a place to discuss ideas, enhancements, tasks, and bugs for a project.
-type MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeIssue struct {
-	Typename string `json:"__typename"`
-}
-
-// MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeMarketplaceListing includes the requested fields of the GraphQL type MarketplaceListing.
-// The GraphQL type's documentation follows.
-//
-// A listing in the GitHub integration marketplace.
-type MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeMarketplaceListing struct {
-	Typename string `json:"__typename"`
-}
-
-// MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeOrganization includes the requested fields of the GraphQL type Organization.
-// The GraphQL type's documentation follows.
-//
-// An account on GitHub, with one or more owners, that has repositories, members and teams.
-type MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeOrganization struct {
-	Typename string `json:"__typename"`
-}
-
-// MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequest includes the requested fields of the GraphQL type PullRequest.
-// The GraphQL type's documentation follows.
-//
-// A repository pull request.
-type MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequest struct {
-	Typename string `json:"__typename"`
-	// Identifies the pull request number.
-	Number int `json:"number"`
-	// Identifies the pull request title.
-	Title string `json:"title"`
-	// The repository associated with this node.
-	Repository MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequestRepository `json:"repository"`
-	// Identifies the date and time when the object was created.
-	CreatedAt time.Time `json:"createdAt"`
-	// The date and time that the pull request was merged.
-	MergedAt time.Time `json:"mergedAt"`
-	// The HTTP URL for this pull request.
-	Url string `json:"url"`
-	// The number of changed files in this pull request.
-	ChangedFiles int `json:"changedFiles"`
-	// The number of additions in this pull request.
-	Additions int `json:"additions"`
-	// The number of deletions in this pull request.
-	Deletions int `json:"deletions"`
-}
-
-// MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequestRepository includes the requested fields of the GraphQL type Repository.
-// The GraphQL type's documentation follows.
-//
-// A repository contains the content for a project.
-type MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequestRepository struct {
-	// The repository's name with owner.
-	NameWithOwner string `json:"nameWithOwner"`
-}
-
-// MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeRepository includes the requested fields of the GraphQL type Repository.
-// The GraphQL type's documentation follows.
-//
-// A repository contains the content for a project.
-type MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeRepository struct {
-	Typename string `json:"__typename"`
-}
-
-// MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem includes the requested fields of the GraphQL interface SearchResultItem.
-//
-// MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem is implemented by the following types:
-// MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeApp
-// MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeIssue
-// MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeMarketplaceListing
-// MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeOrganization
-// MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequest
-// MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeRepository
-// MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeUser
-//
-// The GraphQL type's documentation follows.
-//
-// The results of a search.
-type MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem interface {
-	implementsGraphQLInterfaceMyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem()
-	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
-	GetTypename() string
-}
-
-func (v *MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeApp) implementsGraphQLInterfaceMyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem() {
-}
-
-// GetTypename is a part of, and documented with, the interface MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem.
-func (v *MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeApp) GetTypename() string {
-	return v.Typename
-}
-
-func (v *MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeIssue) implementsGraphQLInterfaceMyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem() {
-}
-
-// GetTypename is a part of, and documented with, the interface MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem.
-func (v *MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeIssue) GetTypename() string {
-	return v.Typename
-}
-
-func (v *MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeMarketplaceListing) implementsGraphQLInterfaceMyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem() {
-}
-
-// GetTypename is a part of, and documented with, the interface MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem.
-func (v *MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeMarketplaceListing) GetTypename() string {
-	return v.Typename
-}
-
-func (v *MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeOrganization) implementsGraphQLInterfaceMyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem() {
-}
-
-// GetTypename is a part of, and documented with, the interface MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem.
-func (v *MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeOrganization) GetTypename() string {
-	return v.Typename
-}
-
-func (v *MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequest) implementsGraphQLInterfaceMyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem() {
-}
-
-// GetTypename is a part of, and documented with, the interface MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem.
-func (v *MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequest) GetTypename() string {
-	return v.Typename
-}
-
-func (v *MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeRepository) implementsGraphQLInterfaceMyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem() {
-}
-
-// GetTypename is a part of, and documented with, the interface MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem.
-func (v *MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeRepository) GetTypename() string {
-	return v.Typename
-}
-
-func (v *MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeUser) implementsGraphQLInterfaceMyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem() {
-}
-
-// GetTypename is a part of, and documented with, the interface MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem.
-func (v *MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeUser) GetTypename() string {
-	return v.Typename
-}
-
-func __unmarshalMyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem(v *MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem, m json.RawMessage) error {
-	if string(m) == "null" {
-		return nil
-	}
-
-	var tn struct {
-		TypeName string `json:"__typename"`
-	}
-	err := json.Unmarshal(m, &tn)
-	if err != nil {
-		return err
-	}
-
-	switch tn.TypeName {
-	case "App":
-		*v = new(MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeApp)
-		return json.Unmarshal(m, *v)
-	case "Issue":
-		*v = new(MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeIssue)
-		return json.Unmarshal(m, *v)
-	case "MarketplaceListing":
-		*v = new(MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeMarketplaceListing)
-		return json.Unmarshal(m, *v)
-	case "Organization":
-		*v = new(MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeOrganization)
-		return json.Unmarshal(m, *v)
-	case "PullRequest":
-		*v = new(MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequest)
-		return json.Unmarshal(m, *v)
-	case "Repository":
-		*v = new(MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeRepository)
-		return json.Unmarshal(m, *v)
-	case "User":
-		*v = new(MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeUser)
-		return json.Unmarshal(m, *v)
-	case "":
-		return fmt.Errorf(
-			"Response was missing SearchResultItem.__typename")
-	default:
-		return fmt.Errorf(
-			`Unexpected concrete type for MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem: "%v"`, tn.TypeName)
-	}
-}
-
-// MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeUser includes the requested fields of the GraphQL type User.
-// The GraphQL type's documentation follows.
-//
-// A user is an individual's account on GitHub that owns repositories and can make new content.
-type MyBatchMerequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeUser struct {
-	Typename string `json:"__typename"`
+	Edges []types.Edge `json:"edges"`
 }
 
 // MyBatchResponse is returned by MyBatch on success.
@@ -535,247 +53,7 @@ type MyBatchTeammatesSearchResultItemConnection struct {
 	// The number of issues that matched the search query.
 	IssueCount int `json:"issueCount"`
 	// A list of edges.
-	Edges []MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdge `json:"edges"`
-}
-
-// MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdge includes the requested fields of the GraphQL type SearchResultItemEdge.
-// The GraphQL type's documentation follows.
-//
-// An edge in a connection.
-type MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdge struct {
-	// The item at the end of the edge.
-	Node MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem `json:"-"`
-}
-
-func (v *MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdge) UnmarshalJSON(b []byte) error {
-
-	type MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeWrapper MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdge
-
-	var firstPass struct {
-		*MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeWrapper
-		Node json.RawMessage `json:"node"`
-	}
-	firstPass.MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeWrapper = (*MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeWrapper)(v)
-
-	err := json.Unmarshal(b, &firstPass)
-	if err != nil {
-		return err
-	}
-
-	{
-		target := &v.Node
-		raw := firstPass.Node
-		err = __unmarshalMyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem(
-			target, raw)
-		if err != nil {
-			return fmt.Errorf(
-				"Unable to unmarshal MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdge.Node: %w", err)
-		}
-	}
-	return nil
-}
-
-// MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeApp includes the requested fields of the GraphQL type App.
-// The GraphQL type's documentation follows.
-//
-// A GitHub App.
-type MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeApp struct {
-	Typename string `json:"__typename"`
-}
-
-// MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeIssue includes the requested fields of the GraphQL type Issue.
-// The GraphQL type's documentation follows.
-//
-// An Issue is a place to discuss ideas, enhancements, tasks, and bugs for a project.
-type MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeIssue struct {
-	Typename string `json:"__typename"`
-}
-
-// MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeMarketplaceListing includes the requested fields of the GraphQL type MarketplaceListing.
-// The GraphQL type's documentation follows.
-//
-// A listing in the GitHub integration marketplace.
-type MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeMarketplaceListing struct {
-	Typename string `json:"__typename"`
-}
-
-// MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeOrganization includes the requested fields of the GraphQL type Organization.
-// The GraphQL type's documentation follows.
-//
-// An account on GitHub, with one or more owners, that has repositories, members and teams.
-type MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeOrganization struct {
-	Typename string `json:"__typename"`
-}
-
-// MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequest includes the requested fields of the GraphQL type PullRequest.
-// The GraphQL type's documentation follows.
-//
-// A repository pull request.
-type MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequest struct {
-	Typename string `json:"__typename"`
-	// Identifies the pull request number.
-	Number int `json:"number"`
-	// Identifies the pull request title.
-	Title string `json:"title"`
-	// The repository associated with this node.
-	Repository MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequestRepository `json:"repository"`
-	// Identifies the date and time when the object was created.
-	CreatedAt time.Time `json:"createdAt"`
-	// The date and time that the pull request was merged.
-	MergedAt time.Time `json:"mergedAt"`
-	// The HTTP URL for this pull request.
-	Url string `json:"url"`
-	// The number of changed files in this pull request.
-	ChangedFiles int `json:"changedFiles"`
-	// The number of additions in this pull request.
-	Additions int `json:"additions"`
-	// The number of deletions in this pull request.
-	Deletions int `json:"deletions"`
-}
-
-// MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequestRepository includes the requested fields of the GraphQL type Repository.
-// The GraphQL type's documentation follows.
-//
-// A repository contains the content for a project.
-type MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequestRepository struct {
-	// The repository's name with owner.
-	NameWithOwner string `json:"nameWithOwner"`
-}
-
-// MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeRepository includes the requested fields of the GraphQL type Repository.
-// The GraphQL type's documentation follows.
-//
-// A repository contains the content for a project.
-type MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeRepository struct {
-	Typename string `json:"__typename"`
-}
-
-// MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem includes the requested fields of the GraphQL interface SearchResultItem.
-//
-// MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem is implemented by the following types:
-// MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeApp
-// MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeIssue
-// MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeMarketplaceListing
-// MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeOrganization
-// MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequest
-// MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeRepository
-// MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeUser
-//
-// The GraphQL type's documentation follows.
-//
-// The results of a search.
-type MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem interface {
-	implementsGraphQLInterfaceMyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem()
-	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
-	GetTypename() string
-}
-
-func (v *MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeApp) implementsGraphQLInterfaceMyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem() {
-}
-
-// GetTypename is a part of, and documented with, the interface MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem.
-func (v *MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeApp) GetTypename() string {
-	return v.Typename
-}
-
-func (v *MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeIssue) implementsGraphQLInterfaceMyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem() {
-}
-
-// GetTypename is a part of, and documented with, the interface MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem.
-func (v *MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeIssue) GetTypename() string {
-	return v.Typename
-}
-
-func (v *MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeMarketplaceListing) implementsGraphQLInterfaceMyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem() {
-}
-
-// GetTypename is a part of, and documented with, the interface MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem.
-func (v *MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeMarketplaceListing) GetTypename() string {
-	return v.Typename
-}
-
-func (v *MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeOrganization) implementsGraphQLInterfaceMyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem() {
-}
-
-// GetTypename is a part of, and documented with, the interface MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem.
-func (v *MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeOrganization) GetTypename() string {
-	return v.Typename
-}
-
-func (v *MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequest) implementsGraphQLInterfaceMyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem() {
-}
-
-// GetTypename is a part of, and documented with, the interface MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem.
-func (v *MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequest) GetTypename() string {
-	return v.Typename
-}
-
-func (v *MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeRepository) implementsGraphQLInterfaceMyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem() {
-}
-
-// GetTypename is a part of, and documented with, the interface MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem.
-func (v *MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeRepository) GetTypename() string {
-	return v.Typename
-}
-
-func (v *MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeUser) implementsGraphQLInterfaceMyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem() {
-}
-
-// GetTypename is a part of, and documented with, the interface MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem.
-func (v *MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeUser) GetTypename() string {
-	return v.Typename
-}
-
-func __unmarshalMyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem(v *MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem, m json.RawMessage) error {
-	if string(m) == "null" {
-		return nil
-	}
-
-	var tn struct {
-		TypeName string `json:"__typename"`
-	}
-	err := json.Unmarshal(m, &tn)
-	if err != nil {
-		return err
-	}
-
-	switch tn.TypeName {
-	case "App":
-		*v = new(MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeApp)
-		return json.Unmarshal(m, *v)
-	case "Issue":
-		*v = new(MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeIssue)
-		return json.Unmarshal(m, *v)
-	case "MarketplaceListing":
-		*v = new(MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeMarketplaceListing)
-		return json.Unmarshal(m, *v)
-	case "Organization":
-		*v = new(MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeOrganization)
-		return json.Unmarshal(m, *v)
-	case "PullRequest":
-		*v = new(MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequest)
-		return json.Unmarshal(m, *v)
-	case "Repository":
-		*v = new(MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeRepository)
-		return json.Unmarshal(m, *v)
-	case "User":
-		*v = new(MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeUser)
-		return json.Unmarshal(m, *v)
-	case "":
-		return fmt.Errorf(
-			"Response was missing SearchResultItem.__typename")
-	default:
-		return fmt.Errorf(
-			`Unexpected concrete type for MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem: "%v"`, tn.TypeName)
-	}
-}
-
-// MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeUser includes the requested fields of the GraphQL type User.
-// The GraphQL type's documentation follows.
-//
-// A user is an individual's account on GitHub that owns repositories and can make new content.
-type MyBatchTeammatesSearchResultItemConnectionEdgesSearchResultItemEdgeNodeUser struct {
-	Typename string `json:"__typename"`
+	Edges []types.Edge `json:"edges"`
 }
 
 // MyBatchTeammentionsSearchResultItemConnection includes the requested fields of the GraphQL type SearchResultItemConnection.
@@ -786,247 +64,7 @@ type MyBatchTeammentionsSearchResultItemConnection struct {
 	// The number of issues that matched the search query.
 	IssueCount int `json:"issueCount"`
 	// A list of edges.
-	Edges []MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdge `json:"edges"`
-}
-
-// MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdge includes the requested fields of the GraphQL type SearchResultItemEdge.
-// The GraphQL type's documentation follows.
-//
-// An edge in a connection.
-type MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdge struct {
-	// The item at the end of the edge.
-	Node MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem `json:"-"`
-}
-
-func (v *MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdge) UnmarshalJSON(b []byte) error {
-
-	type MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeWrapper MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdge
-
-	var firstPass struct {
-		*MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeWrapper
-		Node json.RawMessage `json:"node"`
-	}
-	firstPass.MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeWrapper = (*MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeWrapper)(v)
-
-	err := json.Unmarshal(b, &firstPass)
-	if err != nil {
-		return err
-	}
-
-	{
-		target := &v.Node
-		raw := firstPass.Node
-		err = __unmarshalMyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem(
-			target, raw)
-		if err != nil {
-			return fmt.Errorf(
-				"Unable to unmarshal MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdge.Node: %w", err)
-		}
-	}
-	return nil
-}
-
-// MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeApp includes the requested fields of the GraphQL type App.
-// The GraphQL type's documentation follows.
-//
-// A GitHub App.
-type MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeApp struct {
-	Typename string `json:"__typename"`
-}
-
-// MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeIssue includes the requested fields of the GraphQL type Issue.
-// The GraphQL type's documentation follows.
-//
-// An Issue is a place to discuss ideas, enhancements, tasks, and bugs for a project.
-type MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeIssue struct {
-	Typename string `json:"__typename"`
-}
-
-// MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeMarketplaceListing includes the requested fields of the GraphQL type MarketplaceListing.
-// The GraphQL type's documentation follows.
-//
-// A listing in the GitHub integration marketplace.
-type MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeMarketplaceListing struct {
-	Typename string `json:"__typename"`
-}
-
-// MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeOrganization includes the requested fields of the GraphQL type Organization.
-// The GraphQL type's documentation follows.
-//
-// An account on GitHub, with one or more owners, that has repositories, members and teams.
-type MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeOrganization struct {
-	Typename string `json:"__typename"`
-}
-
-// MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequest includes the requested fields of the GraphQL type PullRequest.
-// The GraphQL type's documentation follows.
-//
-// A repository pull request.
-type MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequest struct {
-	Typename string `json:"__typename"`
-	// Identifies the pull request number.
-	Number int `json:"number"`
-	// Identifies the pull request title.
-	Title string `json:"title"`
-	// The repository associated with this node.
-	Repository MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequestRepository `json:"repository"`
-	// Identifies the date and time when the object was created.
-	CreatedAt time.Time `json:"createdAt"`
-	// The date and time that the pull request was merged.
-	MergedAt time.Time `json:"mergedAt"`
-	// The HTTP URL for this pull request.
-	Url string `json:"url"`
-	// The number of changed files in this pull request.
-	ChangedFiles int `json:"changedFiles"`
-	// The number of additions in this pull request.
-	Additions int `json:"additions"`
-	// The number of deletions in this pull request.
-	Deletions int `json:"deletions"`
-}
-
-// MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequestRepository includes the requested fields of the GraphQL type Repository.
-// The GraphQL type's documentation follows.
-//
-// A repository contains the content for a project.
-type MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequestRepository struct {
-	// The repository's name with owner.
-	NameWithOwner string `json:"nameWithOwner"`
-}
-
-// MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeRepository includes the requested fields of the GraphQL type Repository.
-// The GraphQL type's documentation follows.
-//
-// A repository contains the content for a project.
-type MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeRepository struct {
-	Typename string `json:"__typename"`
-}
-
-// MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem includes the requested fields of the GraphQL interface SearchResultItem.
-//
-// MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem is implemented by the following types:
-// MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeApp
-// MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeIssue
-// MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeMarketplaceListing
-// MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeOrganization
-// MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequest
-// MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeRepository
-// MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeUser
-//
-// The GraphQL type's documentation follows.
-//
-// The results of a search.
-type MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem interface {
-	implementsGraphQLInterfaceMyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem()
-	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
-	GetTypename() string
-}
-
-func (v *MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeApp) implementsGraphQLInterfaceMyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem() {
-}
-
-// GetTypename is a part of, and documented with, the interface MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem.
-func (v *MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeApp) GetTypename() string {
-	return v.Typename
-}
-
-func (v *MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeIssue) implementsGraphQLInterfaceMyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem() {
-}
-
-// GetTypename is a part of, and documented with, the interface MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem.
-func (v *MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeIssue) GetTypename() string {
-	return v.Typename
-}
-
-func (v *MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeMarketplaceListing) implementsGraphQLInterfaceMyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem() {
-}
-
-// GetTypename is a part of, and documented with, the interface MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem.
-func (v *MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeMarketplaceListing) GetTypename() string {
-	return v.Typename
-}
-
-func (v *MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeOrganization) implementsGraphQLInterfaceMyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem() {
-}
-
-// GetTypename is a part of, and documented with, the interface MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem.
-func (v *MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeOrganization) GetTypename() string {
-	return v.Typename
-}
-
-func (v *MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequest) implementsGraphQLInterfaceMyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem() {
-}
-
-// GetTypename is a part of, and documented with, the interface MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem.
-func (v *MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequest) GetTypename() string {
-	return v.Typename
-}
-
-func (v *MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeRepository) implementsGraphQLInterfaceMyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem() {
-}
-
-// GetTypename is a part of, and documented with, the interface MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem.
-func (v *MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeRepository) GetTypename() string {
-	return v.Typename
-}
-
-func (v *MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeUser) implementsGraphQLInterfaceMyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem() {
-}
-
-// GetTypename is a part of, and documented with, the interface MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem.
-func (v *MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeUser) GetTypename() string {
-	return v.Typename
-}
-
-func __unmarshalMyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem(v *MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem, m json.RawMessage) error {
-	if string(m) == "null" {
-		return nil
-	}
-
-	var tn struct {
-		TypeName string `json:"__typename"`
-	}
-	err := json.Unmarshal(m, &tn)
-	if err != nil {
-		return err
-	}
-
-	switch tn.TypeName {
-	case "App":
-		*v = new(MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeApp)
-		return json.Unmarshal(m, *v)
-	case "Issue":
-		*v = new(MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeIssue)
-		return json.Unmarshal(m, *v)
-	case "MarketplaceListing":
-		*v = new(MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeMarketplaceListing)
-		return json.Unmarshal(m, *v)
-	case "Organization":
-		*v = new(MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeOrganization)
-		return json.Unmarshal(m, *v)
-	case "PullRequest":
-		*v = new(MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequest)
-		return json.Unmarshal(m, *v)
-	case "Repository":
-		*v = new(MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeRepository)
-		return json.Unmarshal(m, *v)
-	case "User":
-		*v = new(MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeUser)
-		return json.Unmarshal(m, *v)
-	case "":
-		return fmt.Errorf(
-			"Response was missing SearchResultItem.__typename")
-	default:
-		return fmt.Errorf(
-			`Unexpected concrete type for MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem: "%v"`, tn.TypeName)
-	}
-}
-
-// MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeUser includes the requested fields of the GraphQL type User.
-// The GraphQL type's documentation follows.
-//
-// A user is an individual's account on GitHub that owns repositories and can make new content.
-type MyBatchTeammentionsSearchResultItemConnectionEdgesSearchResultItemEdgeNodeUser struct {
-	Typename string `json:"__typename"`
+	Edges []types.Edge `json:"edges"`
 }
 
 // MyBatchTeamrequestedSearchResultItemConnection includes the requested fields of the GraphQL type SearchResultItemConnection.
@@ -1037,247 +75,259 @@ type MyBatchTeamrequestedSearchResultItemConnection struct {
 	// The number of issues that matched the search query.
 	IssueCount int `json:"issueCount"`
 	// A list of edges.
-	Edges []MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdge `json:"edges"`
+	Edges []types.Edge `json:"edges"`
 }
 
-// MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdge includes the requested fields of the GraphQL type SearchResultItemEdge.
-// The GraphQL type's documentation follows.
-//
-// An edge in a connection.
-type MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdge struct {
-	// The item at the end of the edge.
-	Node MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem `json:"-"`
+// MyLoginResponse is returned by MyLogin on success.
+type MyLoginResponse struct {
+	// The currently authenticated user.
+	Viewer MyLoginViewerUser `json:"viewer"`
 }
 
-func (v *MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdge) UnmarshalJSON(b []byte) error {
-
-	type MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeWrapper MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdge
-
-	var firstPass struct {
-		*MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeWrapper
-		Node json.RawMessage `json:"node"`
-	}
-	firstPass.MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeWrapper = (*MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeWrapper)(v)
-
-	err := json.Unmarshal(b, &firstPass)
-	if err != nil {
-		return err
-	}
-
-	{
-		target := &v.Node
-		raw := firstPass.Node
-		err = __unmarshalMyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem(
-			target, raw)
-		if err != nil {
-			return fmt.Errorf(
-				"Unable to unmarshal MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdge.Node: %w", err)
-		}
-	}
-	return nil
-}
-
-// MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeApp includes the requested fields of the GraphQL type App.
-// The GraphQL type's documentation follows.
-//
-// A GitHub App.
-type MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeApp struct {
-	Typename string `json:"__typename"`
-}
-
-// MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeIssue includes the requested fields of the GraphQL type Issue.
-// The GraphQL type's documentation follows.
-//
-// An Issue is a place to discuss ideas, enhancements, tasks, and bugs for a project.
-type MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeIssue struct {
-	Typename string `json:"__typename"`
-}
-
-// MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeMarketplaceListing includes the requested fields of the GraphQL type MarketplaceListing.
-// The GraphQL type's documentation follows.
-//
-// A listing in the GitHub integration marketplace.
-type MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeMarketplaceListing struct {
-	Typename string `json:"__typename"`
-}
-
-// MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeOrganization includes the requested fields of the GraphQL type Organization.
-// The GraphQL type's documentation follows.
-//
-// An account on GitHub, with one or more owners, that has repositories, members and teams.
-type MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeOrganization struct {
-	Typename string `json:"__typename"`
-}
-
-// MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequest includes the requested fields of the GraphQL type PullRequest.
-// The GraphQL type's documentation follows.
-//
-// A repository pull request.
-type MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequest struct {
-	Typename string `json:"__typename"`
-	// Identifies the pull request number.
-	Number int `json:"number"`
-	// Identifies the pull request title.
-	Title string `json:"title"`
-	// The repository associated with this node.
-	Repository MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequestRepository `json:"repository"`
-	// Identifies the date and time when the object was created.
-	CreatedAt time.Time `json:"createdAt"`
-	// The date and time that the pull request was merged.
-	MergedAt time.Time `json:"mergedAt"`
-	// The HTTP URL for this pull request.
-	Url string `json:"url"`
-	// The number of changed files in this pull request.
-	ChangedFiles int `json:"changedFiles"`
-	// The number of additions in this pull request.
-	Additions int `json:"additions"`
-	// The number of deletions in this pull request.
-	Deletions int `json:"deletions"`
-}
-
-// MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequestRepository includes the requested fields of the GraphQL type Repository.
-// The GraphQL type's documentation follows.
-//
-// A repository contains the content for a project.
-type MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequestRepository struct {
-	// The repository's name with owner.
-	NameWithOwner string `json:"nameWithOwner"`
-}
-
-// MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeRepository includes the requested fields of the GraphQL type Repository.
-// The GraphQL type's documentation follows.
-//
-// A repository contains the content for a project.
-type MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeRepository struct {
-	Typename string `json:"__typename"`
-}
-
-// MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem includes the requested fields of the GraphQL interface SearchResultItem.
-//
-// MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem is implemented by the following types:
-// MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeApp
-// MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeIssue
-// MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeMarketplaceListing
-// MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeOrganization
-// MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequest
-// MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeRepository
-// MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeUser
-//
-// The GraphQL type's documentation follows.
-//
-// The results of a search.
-type MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem interface {
-	implementsGraphQLInterfaceMyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem()
-	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
-	GetTypename() string
-}
-
-func (v *MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeApp) implementsGraphQLInterfaceMyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem() {
-}
-
-// GetTypename is a part of, and documented with, the interface MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem.
-func (v *MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeApp) GetTypename() string {
-	return v.Typename
-}
-
-func (v *MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeIssue) implementsGraphQLInterfaceMyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem() {
-}
-
-// GetTypename is a part of, and documented with, the interface MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem.
-func (v *MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeIssue) GetTypename() string {
-	return v.Typename
-}
-
-func (v *MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeMarketplaceListing) implementsGraphQLInterfaceMyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem() {
-}
-
-// GetTypename is a part of, and documented with, the interface MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem.
-func (v *MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeMarketplaceListing) GetTypename() string {
-	return v.Typename
-}
-
-func (v *MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeOrganization) implementsGraphQLInterfaceMyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem() {
-}
-
-// GetTypename is a part of, and documented with, the interface MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem.
-func (v *MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeOrganization) GetTypename() string {
-	return v.Typename
-}
-
-func (v *MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequest) implementsGraphQLInterfaceMyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem() {
-}
-
-// GetTypename is a part of, and documented with, the interface MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem.
-func (v *MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequest) GetTypename() string {
-	return v.Typename
-}
-
-func (v *MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeRepository) implementsGraphQLInterfaceMyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem() {
-}
-
-// GetTypename is a part of, and documented with, the interface MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem.
-func (v *MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeRepository) GetTypename() string {
-	return v.Typename
-}
-
-func (v *MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeUser) implementsGraphQLInterfaceMyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem() {
-}
-
-// GetTypename is a part of, and documented with, the interface MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem.
-func (v *MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeUser) GetTypename() string {
-	return v.Typename
-}
-
-func __unmarshalMyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem(v *MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem, m json.RawMessage) error {
-	if string(m) == "null" {
-		return nil
-	}
-
-	var tn struct {
-		TypeName string `json:"__typename"`
-	}
-	err := json.Unmarshal(m, &tn)
-	if err != nil {
-		return err
-	}
-
-	switch tn.TypeName {
-	case "App":
-		*v = new(MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeApp)
-		return json.Unmarshal(m, *v)
-	case "Issue":
-		*v = new(MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeIssue)
-		return json.Unmarshal(m, *v)
-	case "MarketplaceListing":
-		*v = new(MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeMarketplaceListing)
-		return json.Unmarshal(m, *v)
-	case "Organization":
-		*v = new(MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeOrganization)
-		return json.Unmarshal(m, *v)
-	case "PullRequest":
-		*v = new(MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodePullRequest)
-		return json.Unmarshal(m, *v)
-	case "Repository":
-		*v = new(MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeRepository)
-		return json.Unmarshal(m, *v)
-	case "User":
-		*v = new(MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeUser)
-		return json.Unmarshal(m, *v)
-	case "":
-		return fmt.Errorf(
-			"Response was missing SearchResultItem.__typename")
-	default:
-		return fmt.Errorf(
-			`Unexpected concrete type for MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeSearchResultItem: "%v"`, tn.TypeName)
-	}
-}
-
-// MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeUser includes the requested fields of the GraphQL type User.
+// MyLoginViewerUser includes the requested fields of the GraphQL type User.
 // The GraphQL type's documentation follows.
 //
 // A user is an individual's account on GitHub that owns repositories and can make new content.
-type MyBatchTeamrequestedSearchResultItemConnectionEdgesSearchResultItemEdgeNodeUser struct {
-	Typename string `json:"__typename"`
+type MyLoginViewerUser struct {
+	// The username used to login.
+	Login string `json:"login"`
+}
+
+// MyOrgsResponse is returned by MyOrgs on success.
+type MyOrgsResponse struct {
+	// The currently authenticated user.
+	Viewer MyOrgsViewerUser `json:"viewer"`
+}
+
+// MyOrgsViewerUser includes the requested fields of the GraphQL type User.
+// The GraphQL type's documentation follows.
+//
+// A user is an individual's account on GitHub that owns repositories and can make new content.
+type MyOrgsViewerUser struct {
+	// A list of organizations the user belongs to.
+	Organizations MyOrgsViewerUserOrganizationsOrganizationConnection `json:"organizations"`
+}
+
+// MyOrgsViewerUserOrganizationsOrganizationConnection includes the requested fields of the GraphQL type OrganizationConnection.
+// The GraphQL type's documentation follows.
+//
+// The connection type for Organization.
+type MyOrgsViewerUserOrganizationsOrganizationConnection struct {
+	// A list of nodes.
+	Nodes []MyOrgsViewerUserOrganizationsOrganizationConnectionNodesOrganization `json:"nodes"`
+}
+
+// MyOrgsViewerUserOrganizationsOrganizationConnectionNodesOrganization includes the requested fields of the GraphQL type Organization.
+// The GraphQL type's documentation follows.
+//
+// An account on GitHub, with one or more owners, that has repositories, members and teams.
+type MyOrgsViewerUserOrganizationsOrganizationConnectionNodesOrganization struct {
+	// The organization's login name.
+	Login string `json:"login"`
+}
+
+// MyTeamsOrganization includes the requested fields of the GraphQL type Organization.
+// The GraphQL type's documentation follows.
+//
+// An account on GitHub, with one or more owners, that has repositories, members and teams.
+type MyTeamsOrganization struct {
+	// A list of teams in this organization.
+	Teams MyTeamsOrganizationTeamsTeamConnection `json:"teams"`
+}
+
+// MyTeamsOrganizationTeamsTeamConnection includes the requested fields of the GraphQL type TeamConnection.
+// The GraphQL type's documentation follows.
+//
+// The connection type for Team.
+type MyTeamsOrganizationTeamsTeamConnection struct {
+	// Identifies the total count of items in the connection.
+	TotalCount int `json:"totalCount"`
+	// A list of edges.
+	Edges []MyTeamsOrganizationTeamsTeamConnectionEdgesTeamEdge `json:"edges"`
+}
+
+// MyTeamsOrganizationTeamsTeamConnectionEdgesTeamEdge includes the requested fields of the GraphQL type TeamEdge.
+// The GraphQL type's documentation follows.
+//
+// An edge in a connection.
+type MyTeamsOrganizationTeamsTeamConnectionEdgesTeamEdge struct {
+	// The item at the end of the edge.
+	Node MyTeamsOrganizationTeamsTeamConnectionEdgesTeamEdgeNodeTeam `json:"node"`
+}
+
+// MyTeamsOrganizationTeamsTeamConnectionEdgesTeamEdgeNodeTeam includes the requested fields of the GraphQL type Team.
+// The GraphQL type's documentation follows.
+//
+// A team of users in an organization.
+type MyTeamsOrganizationTeamsTeamConnectionEdgesTeamEdgeNodeTeam struct {
+	// The name of the team.
+	Name string `json:"name"`
+	// The description of the team.
+	Description string `json:"description"`
+}
+
+// MyTeamsResponse is returned by MyTeams on success.
+type MyTeamsResponse struct {
+	// Lookup a organization by login.
+	Organization MyTeamsOrganization `json:"organization"`
+}
+
+// TeamMembersOrganization includes the requested fields of the GraphQL type Organization.
+// The GraphQL type's documentation follows.
+//
+// An account on GitHub, with one or more owners, that has repositories, members and teams.
+type TeamMembersOrganization struct {
+	// A list of teams in this organization.
+	Teams TeamMembersOrganizationTeamsTeamConnection `json:"teams"`
+}
+
+// TeamMembersOrganizationTeamsTeamConnection includes the requested fields of the GraphQL type TeamConnection.
+// The GraphQL type's documentation follows.
+//
+// The connection type for Team.
+type TeamMembersOrganizationTeamsTeamConnection struct {
+	// Identifies the total count of items in the connection.
+	TotalCount int `json:"totalCount"`
+	// A list of edges.
+	Edges []TeamMembersOrganizationTeamsTeamConnectionEdgesTeamEdge `json:"edges"`
+}
+
+// TeamMembersOrganizationTeamsTeamConnectionEdgesTeamEdge includes the requested fields of the GraphQL type TeamEdge.
+// The GraphQL type's documentation follows.
+//
+// An edge in a connection.
+type TeamMembersOrganizationTeamsTeamConnectionEdgesTeamEdge struct {
+	// The item at the end of the edge.
+	Node TeamMembersOrganizationTeamsTeamConnectionEdgesTeamEdgeNodeTeam `json:"node"`
+}
+
+// TeamMembersOrganizationTeamsTeamConnectionEdgesTeamEdgeNodeTeam includes the requested fields of the GraphQL type Team.
+// The GraphQL type's documentation follows.
+//
+// A team of users in an organization.
+type TeamMembersOrganizationTeamsTeamConnectionEdgesTeamEdgeNodeTeam struct {
+	// A list of users who are members of this team.
+	Members TeamMembersOrganizationTeamsTeamConnectionEdgesTeamEdgeNodeTeamMembersTeamMemberConnection `json:"members"`
+	// The name of the team.
+	Name string `json:"name"`
+	// The description of the team.
+	Description string `json:"description"`
+}
+
+// TeamMembersOrganizationTeamsTeamConnectionEdgesTeamEdgeNodeTeamMembersTeamMemberConnection includes the requested fields of the GraphQL type TeamMemberConnection.
+// The GraphQL type's documentation follows.
+//
+// The connection type for User.
+type TeamMembersOrganizationTeamsTeamConnectionEdgesTeamEdgeNodeTeamMembersTeamMemberConnection struct {
+	// A list of edges.
+	Edges []TeamMembersOrganizationTeamsTeamConnectionEdgesTeamEdgeNodeTeamMembersTeamMemberConnectionEdgesTeamMemberEdge `json:"edges"`
+}
+
+// TeamMembersOrganizationTeamsTeamConnectionEdgesTeamEdgeNodeTeamMembersTeamMemberConnectionEdgesTeamMemberEdge includes the requested fields of the GraphQL type TeamMemberEdge.
+// The GraphQL type's documentation follows.
+//
+// Represents a user who is a member of a team.
+type TeamMembersOrganizationTeamsTeamConnectionEdgesTeamEdgeNodeTeamMembersTeamMemberConnectionEdgesTeamMemberEdge struct {
+	Node TeamMembersOrganizationTeamsTeamConnectionEdgesTeamEdgeNodeTeamMembersTeamMemberConnectionEdgesTeamMemberEdgeNodeUser `json:"node"`
+}
+
+// TeamMembersOrganizationTeamsTeamConnectionEdgesTeamEdgeNodeTeamMembersTeamMemberConnectionEdgesTeamMemberEdgeNodeUser includes the requested fields of the GraphQL type User.
+// The GraphQL type's documentation follows.
+//
+// A user is an individual's account on GitHub that owns repositories and can make new content.
+type TeamMembersOrganizationTeamsTeamConnectionEdgesTeamEdgeNodeTeamMembersTeamMemberConnectionEdgesTeamMemberEdgeNodeUser struct {
+	// The user's public profile name.
+	Name string `json:"name"`
+	// The username used to login.
+	Login string `json:"login"`
+}
+
+// TeamMembersResponse is returned by TeamMembers on success.
+type TeamMembersResponse struct {
+	// Lookup a organization by login.
+	Organization TeamMembersOrganization `json:"organization"`
+}
+
+func MyLogin(
+	ctx context.Context,
+	client graphql.Client,
+) (*MyLoginResponse, error) {
+	var retval MyLoginResponse
+	err := client.MakeRequest(
+		ctx,
+		"MyLogin",
+		`
+query MyLogin {
+	viewer {
+		login
+	}
+}
+`,
+		&retval,
+		nil,
+	)
+	return &retval, err
+}
+
+func MyOrgs(
+	ctx context.Context,
+	client graphql.Client,
+) (*MyOrgsResponse, error) {
+	var retval MyOrgsResponse
+	err := client.MakeRequest(
+		ctx,
+		"MyOrgs",
+		`
+query MyOrgs {
+	viewer {
+		organizations(first: 100) {
+			nodes {
+				login
+			}
+		}
+	}
+}
+`,
+		&retval,
+		nil,
+	)
+	return &retval, err
+}
+
+func MyTeams(
+	ctx context.Context,
+	client graphql.Client,
+	org string,
+	login string,
+) (*MyTeamsResponse, error) {
+	variables := map[string]interface{}{
+		"Org":   org,
+		"Login": login,
+	}
+
+	var retval MyTeamsResponse
+	err := client.MakeRequest(
+		ctx,
+		"MyTeams",
+		`
+query MyTeams ($Org: String!, $Login: String!) {
+	organization(login: $Org) {
+		teams(first: 100, userLogins: [$Login]) {
+			totalCount
+			edges {
+				node {
+					name
+					description
+				}
+			}
+		}
+	}
+}
+`,
+		&retval,
+		variables,
+	)
+	return &retval, err
 }
 
 func MyBatch(
@@ -1314,6 +364,10 @@ query MyBatch ($MeRequestedQuery: String!, $MeMentionedQuery: String!, $TeamAuth
 					repository {
 						nameWithOwner
 					}
+					author {
+						__typename
+						login
+					}
 					createdAt
 					mergedAt
 					url
@@ -1334,6 +388,10 @@ query MyBatch ($MeRequestedQuery: String!, $MeMentionedQuery: String!, $TeamAuth
 					title
 					repository {
 						nameWithOwner
+					}
+					author {
+						__typename
+						login
 					}
 					createdAt
 					mergedAt
@@ -1356,6 +414,10 @@ query MyBatch ($MeRequestedQuery: String!, $MeMentionedQuery: String!, $TeamAuth
 					repository {
 						nameWithOwner
 					}
+					author {
+						__typename
+						login
+					}
 					createdAt
 					mergedAt
 					url
@@ -1376,6 +438,10 @@ query MyBatch ($MeRequestedQuery: String!, $MeMentionedQuery: String!, $TeamAuth
 					title
 					repository {
 						nameWithOwner
+					}
+					author {
+						__typename
+						login
 					}
 					createdAt
 					mergedAt
@@ -1398,12 +464,60 @@ query MyBatch ($MeRequestedQuery: String!, $MeMentionedQuery: String!, $TeamAuth
 					repository {
 						nameWithOwner
 					}
+					author {
+						__typename
+						login
+					}
 					createdAt
 					mergedAt
 					url
 					changedFiles
 					additions
 					deletions
+				}
+			}
+		}
+	}
+}
+`,
+		&retval,
+		variables,
+	)
+	return &retval, err
+}
+
+func TeamMembers(
+	ctx context.Context,
+	client graphql.Client,
+	org string,
+	team string,
+) (*TeamMembersResponse, error) {
+	variables := map[string]interface{}{
+		"Org":  org,
+		"Team": team,
+	}
+
+	var retval TeamMembersResponse
+	err := client.MakeRequest(
+		ctx,
+		"TeamMembers",
+		`
+query TeamMembers ($Org: String!, $Team: String!) {
+	organization(login: $Org) {
+		teams(first: 100, query: $Team) {
+			totalCount
+			edges {
+				node {
+					members {
+						edges {
+							node {
+								name
+								login
+							}
+						}
+					}
+					name
+					description
 				}
 			}
 		}
