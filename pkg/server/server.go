@@ -7,7 +7,6 @@ import (
 	"github.com/Khan/genqlient/graphql"
 	"github.com/StevenACoffman/teamboard/pkg"
 	"github.com/StevenACoffman/teamboard/pkg/github"
-	"io/fs"
 	"log"
 	"net/http"
 	"os"
@@ -119,11 +118,9 @@ func (s *ServerHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 		// any static asset files in the pkg/asset folder will be available as
 		// localhost:3000/static/
-		var contentFS, _ = fs.Sub(pkg.AssetData, "static")
-
 		s.mux.Handle("/static/",
 			http.StripPrefix("/static/",
-				http.FileServer(http.FS(contentFS))))
+				http.FileServer(http.FS(pkg.AssetData))))
 		s.mux.HandleFunc("/redirect", s.RedirectToHome)
 		s.mux.HandleFunc("/health", HealthCheck)
 		s.mux.HandleFunc("/", s.DefaultPage)
