@@ -50,6 +50,11 @@ func Generate() error {
 	return sh.Run("go", "generate", "./...")
 }
 
+// Runs go run
+func Run() error {
+	return sh.Run("go", "run", "main.go")
+}
+
 var releaseTag = regexp.MustCompile(`^v[0-9]+\.[0-9]+\.[0-9]+$`)
 
 // Generates a new release. Expects a version tag in vx.x.x format.
