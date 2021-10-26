@@ -9,6 +9,8 @@ The trick is, if you have multiple orgs, or multiple teams (likely), you need to
 
 Right now, it just picks `Khan` and `districts` which is suboptimal.
 
+You should change that in [server.go#L135](https://github.com/StevenACoffman/teamboard/blob/main/pkg/server/server.go#L135).
+
 ### Mage
 
 Instead of `make` and `Makefile`, I used [mage](https://magefile.org/) and made a [magefile](https://github.com/StevenACoffman/teamboard/blob/main/magefile.go).
@@ -18,3 +20,4 @@ If you do `brew install mage` then you can run here:
 + `mage generate` - will re-generate the genqlient code by doing `go generate ./...`
 + `mage install` - will build and install the teamboard application
 
+Or just run the go commands by hand.
